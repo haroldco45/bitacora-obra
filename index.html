@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bitácora de Obra Pro · Vibras Positivas HM</title>
+<meta name="description" content="Bitácora diaria de obra pública con folios firmados, control de plazo y prórrogas, avance contra presupuesto, obligaciones contractuales y PQR de la comunidad.">
+<meta name="theme-color" content="#23272b">
+<!-- Open Graph / Twitter -->
+<meta property="og:title" content="Bitácora de Obra Pro">
+<meta property="og:description" content="Folios diarios con firma, plazo y prórrogas, avance de obra, obligaciones y PQR de la comunidad. Para contratistas e interventorías de obra pública.">
+<meta property="og:image" content="https://haroldco45.github.io/bitacora-obra/og-image.png">
+<meta property="og:url" content="https://haroldco45.github.io/bitacora-obra/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bitácora de Obra Pro">
+<meta name="twitter:description" content="Folios diarios con firma, plazo y prórrogas, avance de obra, obligaciones y PQR de la comunidad.">
+<meta name="twitter:image" content="https://haroldco45.github.io/bitacora-obra/og-image.png">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --asfalto:#23272b; --papel:#f4f2ed; --concreto:#e7e3db; --tarjeta:#fff; --tinta:#1d2124; --tenue:#5d6368;
+  --linea:#d3cec4; --amarillo:#f2b90f; --rojo:#c8321e; --verde:#2f7d4f; --azul:#3b6e99;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --papel:#191c1f; --concreto:#262a2e; --tarjeta:#202427; --tinta:#ebeae6; --tenue:#a2a7ac; --linea:#3a3f44;
+  --rojo:#ef5a43; --verde:#5dbb84; --azul:#7fb0da;}}
+:root[data-theme="dark"]{--papel:#191c1f; --concreto:#262a2e; --tarjeta:#202427; --tinta:#ebeae6; --tenue:#a2a7ac; --linea:#3a3f44;
+  --rojo:#ef5a43; --verde:#5dbb84; --azul:#7fb0da;}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--amarillo);outline-offset:2px}
+.w{max-width:900px;margin:0 auto;padding:0 16px}
+
+/* Encabezado */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--asfalto);color:#f3f1ec}
+header.top::after{content:"";display:block;height:5px;background:repeating-linear-gradient(135deg,var(--amarillo) 0 14px,var(--asfalto) 14px 28px)}
+.top .w{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px}
+.marca{font-variation-settings:"wdth" 70;font-weight:850;font-size:1.25rem;line-height:1;white-space:nowrap}
+.marca span{color:var(--amarillo)}
+.selector{flex:1;min-width:0}
+.selector select{width:100%;background:#343a40;border:1px solid #4a5157;color:#f3f1ec;border-radius:6px;padding:7px 10px;font-size:.9rem}
+.btn-ico{background:none;border:1px solid #4a5157;color:#f3f1ec;border-radius:6px;padding:7px 10px;cursor:pointer;font-size:.9rem;white-space:nowrap}
+.rolchip{font-size:.75rem;background:var(--amarillo);color:#1d2124;border-radius:3px;padding:2px 7px;font-weight:700;white-space:nowrap}
+
+main{padding:18px 0 110px}
+h2.vista{font-variation-settings:"wdth" 75;font-weight:820;font-size:1.7rem;line-height:1.1;margin:4px 0 4px}
+p.lead{color:var(--tenue);margin:0 0 18px;max-width:68ch}
+h3{font-variation-settings:"wdth" 85;font-size:1.1rem;margin:26px 0 10px}
+
+/* Tarjetas y datos */
+.card{background:var(--tarjeta);border:1px solid var(--linea);border-radius:8px;padding:16px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.dato .n{font-variation-settings:"wdth" 70;font-weight:850;font-size:1.9rem;line-height:1.05;font-variant-numeric:tabular-nums}
+.dato .t{color:var(--tenue);font-size:.86rem}
+.rojo{color:var(--rojo)} .verde{color:var(--verde)} .tenue{color:var(--tenue)}
+
+/* Vía de plazo */
+.via{position:relative;height:40px;border-radius:5px;background:var(--concreto);overflow:hidden;margin:6px 0}
+.via .trans{position:absolute;inset:0 auto 0 0;background:#6b7278}
+.via .venc{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,var(--rojo) 0 9px,#9e2616 9px 18px)}
+.via .susp{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(45deg,var(--amarillo) 0 6px,transparent 6px 12px);opacity:.8}
+.via .hoy{position:absolute;top:0;bottom:0;width:3px;background:var(--amarillo)}
+.via-lbl{display:flex;justify-content:space-between;font-size:.8rem;color:var(--tenue);gap:8px}
+.via-lbl b{display:block;color:var(--tinta)}
+
+/* Alertas */
+.alerta{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:6px;margin-bottom:8px;border:1px solid var(--linea);background:var(--tarjeta)}
+.alerta::before{content:"!";flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.8rem;background:var(--rojo);color:#fff;margin-top:1px}
+.alerta.media::before{background:var(--amarillo);color:#1d2124}
+.alerta.ok::before{content:"✓";background:var(--verde)}
+
+/* Barras */
+.barra{height:9px;background:var(--concreto);border-radius:5px;overflow:hidden}
+.barra i{display:block;height:100%;background:var(--azul)}
+.barra.tiempo i{background:#7d858c}
+
+/* Listas */
+.lista{display:grid;gap:8px}
+.fila{background:var(--tarjeta);border:1px solid var(--linea);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+.fila .cuerpo{flex:1;min-width:0}
+.fila .titulo{font-weight:700}
+.fila .meta{color:var(--tenue);font-size:.86rem}
+.folio-n{font-variation-settings:"wdth" 65;font-weight:850;font-size:1.5rem;line-height:1;min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
+.estado{font-size:.75rem;font-weight:700;border-radius:3px;padding:2px 7px;white-space:nowrap}
+.e-borr{background:var(--amarillo);color:#1d2124}.e-cerr{background:var(--verde);color:#fff}.e-venc{background:var(--rojo);color:#fff}.e-neu{background:var(--concreto);color:var(--tinta)}
+
+/* Botones */
+.btn{border:1px solid var(--linea);background:var(--tarjeta);border-radius:7px;padding:9px 14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--concreto)}
+.btn.pri{background:var(--asfalto);color:#f3f1ec;border-color:var(--asfalto)}
+:root[data-theme="dark"] .btn.pri{background:var(--amarillo);color:#1d2124;border-color:var(--amarillo)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.pri{background:var(--amarillo);color:#1d2124;border-color:var(--amarillo)}}
+.btn.peligro{color:var(--rojo);border-color:var(--rojo)}
+.btn.chico{padding:5px 10px;font-size:.85rem}
+.acciones{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+
+/* Formularios */
+.form{display:grid;gap:12px}
+.form label{display:grid;gap:4px;font-size:.88rem;font-weight:600}
+.form input,.form select,.form textarea{width:100%;background:var(--papel);border:1px solid var(--linea);border-radius:6px;padding:9px 10px;font-weight:400}
+.form textarea{min-height:84px;resize:vertical}
+.form .dos{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}
+.form .tres{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:520px){.form .dos,.form .tres{grid-template-columns:1fr 1fr}}
+.aviso-datos{font-size:.8rem;color:var(--tenue);background:var(--concreto);padding:10px 12px;border-radius:6px}
+
+/* Tabla */
+.tabla{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 7px;border-bottom:1px solid var(--linea);vertical-align:top}
+th{color:var(--tenue);font-size:.8rem;font-weight:700}
+td.num,th.num{text-align:right;white-space:nowrap}
+
+/* Hoja modal */
+.velo{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.velo.abierto{display:flex}
+.hoja{background:var(--papel);width:100%;max-width:760px;max-height:92%;overflow-y:auto;border-radius:14px 14px 0 0;padding:18px 18px calc(22px + env(safe-area-inset-bottom,0px))}
+@media (min-width:760px){.velo{align-items:center}.hoja{border-radius:12px;max-height:88%}}
+.hoja-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.hoja-cab h3{margin:0;font-size:1.3rem}
+
+/* Firma */
+.firma-caja{border:1px dashed var(--tenue);border-radius:6px;background:#fff;touch-action:none}
+.firma-caja canvas{display:block;width:100%;height:150px}
+.firma-img{max-width:220px;background:#fff;border:1px solid var(--linea);border-radius:4px}
+.fotos{display:flex;flex-wrap:wrap;gap:8px}
+.fotos img{width:96px;height:96px;object-fit:cover;border-radius:6px;border:1px solid var(--linea)}
+
+/* Navegación inferior */
+nav.abajo{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--tarjeta);border-top:1px solid var(--linea);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.abajo .w{display:grid;grid-template-columns:repeat(6,1fr);padding:0 4px}
+nav.abajo button{background:none;border:none;padding:9px 2px 8px;cursor:pointer;font-size:.72rem;color:var(--tenue);display:grid;gap:2px;justify-items:center}
+nav.abajo button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.abajo button.activo{color:var(--tinta);font-weight:700}
+nav.abajo button.activo svg{stroke:var(--amarillo);stroke-width:2.4}
+
+footer.credito{text-align:center;font-size:.78rem;color:var(--tenue);padding:26px 0 0}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--asfalto);color:#f3f1ec;padding:10px 16px;border-radius:8px;z-index:60;font-size:.9rem;max-width:90%;display:none}
+.vacio{text-align:center;color:var(--tenue);padding:26px 10px}
+.mono{font-family:ui-monospace,Consolas,monospace;font-size:.78rem;word-break:break-all}
+
+/* Impresión */
+#imprimir{display:none}
+@media print{
+  body *{visibility:hidden}
+  #imprimir,#imprimir *{visibility:visible}
+  #imprimir{display:block;position:absolute;left:0;top:0;width:100%;color:#000;background:#fff;font-size:11pt}
+  #imprimir h1{font-size:16pt;margin:0 0 4px}
+  #imprimir table{font-size:9.5pt}
+  #imprimir th,#imprimir td{border-bottom:1px solid #999;color:#000}
+  .salto{page-break-before:always}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="w">
+    <div class="marca">Bitácora<span>Obra</span></div>
+    <div class="selector"><select id="selContrato" aria-label="Contrato activo"></select></div>
+    <span class="rolchip" id="rolChip"></span>
+  </div>
+</header>
+
+<main class="w" id="app"></main>
+
+<nav class="abajo" aria-label="Secciones">
+  <div class="w" id="navAbajo"></div>
+</nav>
+
+<div class="velo" id="velo" role="dialog" aria-modal="true"><div class="hoja" id="hoja"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<div id="imprimir"></div>
+
+<script>
+"use strict";
+/* ============ Utilidades ============ */
+const TZ = "America/Bogota";
+const KEY = "bitacora-obra-v1";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const peso = n => "$" + Math.round(Number(n) || 0).toLocaleString("es-CO");
+const num = (n, d = 2) => (Number(n) || 0).toLocaleString("es-CO", {maximumFractionDigits: d});
+const pct = n => (isFinite(n) ? n : 0).toFixed(1).replace(".", ",") + "%";
+
+function hoyISO(){ return new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()); }
+function ahoraTexto(){ return new Intl.DateTimeFormat("es-CO",{timeZone:TZ,dateStyle:"medium",timeStyle:"short"}).format(new Date()); }
+function horaISO(){ // ISO con zona Colombia
+  const p = new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).formatToParts(new Date());
+  const g = t => p.find(x => x.type === t).value;
+  return `${g("year")}-${g("month")}-${g("day")}T${g("hour").replace("24","00")}:${g("minute")}:${g("second")}-05:00`;
+}
+const D = iso => new Date(iso + "T00:00:00Z");
+const toISO = d => d.toISOString().slice(0, 10);
+const dias = (a, b) => Math.round((D(b) - D(a)) / 86400000);
+const addDias = (iso, n) => { const d = D(iso); d.setUTCDate(d.getUTCDate() + Number(n || 0)); return toISO(d); };
+function addMeses(iso, n){
+  const d = D(iso), dia = d.getUTCDate();
+  d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() + Number(n || 0));
+  const ult = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+  d.setUTCDate(Math.min(dia, ult)); return toISO(d);
+}
+function addHabiles(iso, n){ let d = iso, c = 0; while (c < n){ d = addDias(d, 1); const w = D(d).getUTCDay(); if (w !== 0 && w !== 6) c++; } return d; }
+const fechaCorta = iso => iso ? D(iso).toLocaleDateString("es-CO",{timeZone:"UTC",day:"numeric",month:"short",year:"numeric"}) : "—";
+async function sha256(txt){
+  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
+  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
+}
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.style.display = "block"; clearTimeout(toast._t); toast._t = setTimeout(() => t.style.display = "none", 3200); }
+
+/* ============ Estado ============ */
+let S = null;
+function estadoVacio(){ return {version:1, contratos:[], activo:null, ajustes:{rol:"residente", pinHash:null, tema:"auto"}}; }
+function cargar(){
+  try { S = JSON.parse(localStorage.getItem(KEY)); } catch(e) { S = null; }
+  if (!S || !Array.isArray(S.contratos)) { S = estadoVacio(); }
+  if (!S.contratos.length){ const c = demo011(); S.contratos.push(c); S.activo = c.id; guardar(true); }
+  if (!S.contratos.find(c => c.id === S.activo)) S.activo = S.contratos[0].id;
+}
+function guardar(silencio){
+  try { localStorage.setItem(KEY, JSON.stringify(S)); return true; }
+  catch(e){ if (!silencio) toast("No hay espacio en el navegador. Exporte un respaldo y reduzca fotos."); return false; }
+}
+const C = () => S.contratos.find(c => c.id === S.activo);
+const esAdmin = () => S.ajustes.rol === "admin";
+
+/* ============ Contrato de ejemplo: 011 de 2026 ============ */
+function demo011(){
+  const cap = (codigo, descripcion, total) => ({id:uid(), codigo, descripcion, unidad:"%", cantidad:100, vrUnit: total/100});
+  const ob = (texto, periodicidad, fuente) => ({id:uid(), texto, periodicidad, fuente, cumplimientos:[]});
+  return {
+    id: uid(), demo: true,
+    numero: "Contrato de Obra No. 011 de 2026",
+    objeto: "Ejecución del proyecto para la optimización del colector en el barrio Kennedy del municipio de Caucasia, Antioquia, en el marco del Convenio No. 040-COV251038",
+    alcance: "698 m de colector en tubería PVC corrugada, 113 conexiones domiciliarias, demoliciones, movimiento de tierra, entibados, cámaras de inspección, reposición de pavimentos y retiro de material sobrante.",
+    entidad: "Empresa de Desarrollo Urbano de Andes - EDUAN", nitEntidad: "901848014-1",
+    contratista: "PALMA CONSTRUYE SAS", nitContratista: "901054152-2", representante: "Wiston Palacio Maquilon",
+    interventoria: "Proceso CC-005-2026", supervisor: "",
+    valor: 3263015588, plazoMeses: 4, plazoDias: 0,
+    fechaFirma: "2026-03-25", fechaInicio: "2026-03-25",
+    lugar: "Barrio Kennedy, Caucasia, Antioquia",
+    eventos: [],
+    polizas: [
+      {id:uid(), tipo:"Cumplimiento (20%)", aseguradora:"", numero:"Por registrar", valor:652603118, vigHasta:"2026-11-25", regla:"plazo+4m"},
+      {id:uid(), tipo:"Responsabilidad civil extracontractual (300 SMMLV)", aseguradora:"", numero:"Por registrar", valor:0, vigHasta:"2026-07-25", regla:"plazo"},
+      {id:uid(), tipo:"Salarios y prestaciones (20%)", aseguradora:"", numero:"Por registrar", valor:652603118, vigHasta:"", regla:"recibo+5a"},
+      {id:uid(), tipo:"Estabilidad y calidad de la obra (20%)", aseguradora:"", numero:"Por registrar", valor:652603118, vigHasta:"", regla:"recibo+5a"}
+    ],
+    items: [
+      cap("A.1.1","Demoliciones (colector)",125565331), cap("A.1.2","Movimiento de tierra (colector)",254948132),
+      cap("A.1.3","Perforación (colector)",1477493), cap("A.1.4","Llenos (colector)",333564687),
+      cap("A.1.5","Entibados (colector)",128500488), cap("A.1.6","Cargue, transporte y botada (colector)",297224771),
+      cap("A.1.7","Pavimento para redes de alcantarillado",463034156), cap("A.1.8","Cámaras de inspección (colector)",107093298),
+      cap("A.2.1","Instalación de tuberías (colector)",7312677), cap("A.3.1","Suministro y transporte de tuberías (colector)",60619176),
+      cap("B.1.1-5","Demoliciones, tierra, llenos, entibados y botada (domiciliarias)",279023656),
+      cap("B.1.6","Pavimento para domiciliarias",101768020), cap("B.1.7-8","Concreto y cámaras (domiciliarias)",89723977),
+      cap("B.2","Instalación de tuberías y accesorios (domiciliarias)",21534390), cap("B.3","Suministro de tuberías y accesorios (domiciliarias)",86037610)
+    ],
+    folios: [],
+    obligaciones: [
+      ob("Reunión previa de reconocimiento y entrega del plan de trabajo y hojas de vida (2 días)","unica","Contrato, obligación específica 1"),
+      ob("Firmar la bitácora diaria con el interventor","diaria","Contrato, obligación específica 11"),
+      ob("Informe semanal de ejecución","semanal","Contrato, obligación específica 39"),
+      ob("Informe mensual a la interventoría (incluye PMT y PAGA), 2 días hábiles después del corte","mensual","Contrato, obligación específica 39"),
+      ob("Reunión mensual con la supervisión de EDUAN y acta del estado del contrato","mensual","Contrato, obligación específica 27"),
+      ob("Soportes de seguridad social y parafiscales con cada factura","pago","Contrato, cláusula séptima"),
+      ob("Relación de trabajadores y paz y salvos firmados para cada pago","pago","Contrato, cláusula séptima"),
+      ob("Ensayos de laboratorio (concreto, llenos compactados) adjuntos a la cuenta mensual","mensual","Contrato, obligación específica 14"),
+      ob("Valla informativa instalada con reconocimiento al Municipio de Caucasia","unica","Contrato, obligación específica 38"),
+      ob("Señalización y Plan de Manejo de Tránsito vigentes en todos los frentes","semanal","Contrato, obligación específica 29"),
+      ob("PGIO presentado a la interventoría (5 días hábiles tras el acta de inicio)","unica","Invitación, numeral 29"),
+      ob("Ampliar las pólizas si hay prórroga o adición","unica","Contrato, cláusula décima primera"),
+      ob("Responder PQR de la comunidad y registrar la gestión social","semanal","Invitación, gestión social y PAGA")
+    ],
+    pqr: []
+  };
+}
+function contratoVacio(){
+  return {id:uid(), numero:"Nuevo contrato", objeto:"", alcance:"", entidad:"", nitEntidad:"", contratista:"", nitContratista:"", representante:"",
+    interventoria:"", supervisor:"", valor:0, plazoMeses:0, plazoDias:0, fechaFirma:"", fechaInicio:"", lugar:"",
+    eventos:[], polizas:[], items:[], folios:[], obligaciones:[], pqr:[]};
+}
+
+/* ============ Motor de plazo ============ */
+function plazo(c){
+  const hoy = hoyISO();
+  if (!c.fechaInicio) return {sinInicio:true};
+  let fin = addDias(addMeses(c.fechaInicio, c.plazoMeses), c.plazoDias);
+  const finOriginal = fin;
+  let prorrogaDias = 0, suspDias = 0, suspActiva = null;
+  const tramosSusp = [];
+  c.eventos.filter(e => e.tipo === "prorroga").forEach(e => { if (e.meses) fin = addMeses(fin, e.meses); if (e.dias) { fin = addDias(fin, e.dias); prorrogaDias += Number(e.dias); } });
+  c.eventos.filter(e => e.tipo === "suspension").forEach(e => {
+    const hasta = e.hasta || hoy; const n = Math.max(0, dias(e.desde, hasta));
+    suspDias += n; tramosSusp.push({desde:e.desde, hasta}); if (!e.hasta) suspActiva = e;
+  });
+  fin = addDias(fin, suspDias);
+  const total = dias(c.fechaInicio, fin);
+  const transcurridos = dias(c.fechaInicio, hoy);
+  const efectivos = Math.max(0, transcurridos - suspDias);
+  const plazoEfectivo = Math.max(1, total - suspDias);
+  const restantes = dias(hoy, fin);
+  return {hoy, fin, finOriginal, total, transcurridos, suspDias, prorrogaDias, suspActiva, tramosSusp,
+    restantes, vencido: restantes < 0 && !suspActiva, pctTiempo: Math.min(100, efectivos / plazoEfectivo * 100)};
+}
+
+/* ============ Avance ============ */
+function ejecutado(c){
+  const m = {}; c.items.forEach(i => m[i.id] = 0);
+  c.folios.forEach(f => (f.cantidades || []).forEach(q => { if (m[q.itemId] !== undefined) m[q.itemId] += Number(q.cant) || 0; }));
+  return m;
+}
+function avance(c){
+  const m = ejecutado(c);
+  let totalV = 0, ejecV = 0;
+  c.items.forEach(i => { const v = i.cantidad * i.vrUnit; totalV += v; ejecV += Math.min(m[i.id], i.cantidad) * i.vrUnit; });
+  return {m, totalV, ejecV, pct: totalV ? ejecV / totalV * 100 : 0};
+}
+
+/* ============ Obligaciones ============ */
+function estadoOblig(c, o){
+  const hoy = hoyISO();
+  const ult = o.cumplimientos.length ? o.cumplimientos[o.cumplimientos.length - 1].fecha : null;
+  if (o.periodicidad === "pago") return {txt:"Con cada acta de pago", clase:"e-neu", prox:null, ult};
+  if (o.periodicidad === "unica") return ult ? {txt:"Cumplida", clase:"e-cerr", prox:null, ult} : {txt:"Pendiente", clase:"e-borr", prox:null, ult};
+  if (o.periodicidad === "diaria"){
+    const f = c.folios.filter(x => x.estado === "cerrado").map(x => x.fecha).sort().pop();
+    if (!f) return {txt:"Sin folios cerrados", clase:"e-venc", prox:hoy, ult:null};
+    const atraso = dias(f, hoy);
+    return atraso <= 1 ? {txt:"Al día", clase:"e-cerr", prox:addDias(f,1), ult:f} : {txt:`${atraso} días sin folio`, clase:"e-venc", prox:addDias(f,1), ult:f};
+  }
+  const base = ult || c.fechaInicio || hoy;
+  const prox = o.periodicidad === "semanal" ? addDias(base, 7) : addMeses(base, 1);
+  const r = dias(hoy, prox);
+  if (r < 0) return {txt:`Vencida hace ${-r} días`, clase:"e-venc", prox, ult};
+  if (r <= 3) return {txt:`Vence en ${r} días`, clase:"e-borr", prox, ult};
+  return {txt:"Al día", clase:"e-cerr", prox, ult};
+}
+
+/* ============ PQR ============ */
+const PLAZO_PQR = 15; // días hábiles, Ley 1755 de 2015 (sin contar festivos)
+function estadoPQR(p){
+  if (p.estado === "respondida") return {txt:"Respondida", clase:"e-cerr"};
+  const lim = addHabiles(p.fecha, PLAZO_PQR); const r = dias(hoyISO(), lim);
+  return r < 0 ? {txt:`Vencida hace ${-r} días`, clase:"e-venc", lim} : {txt:`Vence ${fechaCorta(lim)}`, clase:"e-borr", lim};
+}
+const enmascarar = (t, n = 3) => { t = String(t || ""); return esAdmin() || !t ? t : "•".repeat(Math.max(0, t.length - n)) + t.slice(-n); };
+
+/* ============ Alertas globales ============ */
+function alertas(c){
+  const a = []; const p = plazo(c); const hoy = hoyISO();
+  if (p.sinInicio) a.push(["alta","Falta registrar la fecha del acta de inicio. Sin ella no se puede calcular el plazo."]);
+  else {
+    if (p.suspActiva) a.push(["media",`El contrato está suspendido desde el ${fechaCorta(p.suspActiva.desde)}. Registre el acta de reanudación cuando se reinicie.`]);
+    if (p.vencido) a.push(["alta",`El plazo venció el ${fechaCorta(p.fin)}. Van ${-p.restantes} días de retraso. Multa posible: ${peso(c.valor/1000)} por día si no hay prórroga o suspensión soportada.`]);
+    else if (!p.suspActiva && p.restantes <= 15) a.push(["media",`Quedan ${p.restantes} días de plazo. Si no alcanza, tramite la prórroga antes del vencimiento.`]);
+    const av = avance(c);
+    if (c.items.length && !p.suspActiva && p.pctTiempo - av.pct > 15) a.push(["alta",`El avance (${pct(av.pct)}) va ${num(p.pctTiempo - av.pct,0)} puntos detrás del tiempo transcurrido (${pct(p.pctTiempo)}).`]);
+    c.polizas.forEach(po => {
+      if (!po.vigHasta) return;
+      const requerida = po.regla === "plazo+4m" ? addMeses(p.fin, 4) : po.regla === "plazo" ? p.fin : null;
+      if (po.vigHasta < hoy) a.push(["alta",`La póliza de ${po.tipo} está vencida desde el ${fechaCorta(po.vigHasta)}.`]);
+      else if (requerida && po.vigHasta < requerida) a.push(["alta",`La póliza de ${po.tipo} vence el ${fechaCorta(po.vigHasta)} y no cubre el plazo actual. Debe ampliarse hasta el ${fechaCorta(requerida)}.`]);
+    });
+  }
+  const borr = c.folios.find(f => f.estado === "borrador");
+  if (borr) a.push(["media",`El folio ${borr.n} está en borrador. Ciérrelo con la firma del residente para que quede como prueba.`]);
+  const obVenc = c.obligaciones.filter(o => o.periodicidad !== "diaria" && estadoOblig(c, o).clase === "e-venc");
+  const diaria = c.obligaciones.find(o => o.periodicidad === "diaria");
+  if (diaria && estadoOblig(c, diaria).clase === "e-venc") a.push(["alta",`Bitácora: ${estadoOblig(c, diaria).txt.toLowerCase()}. Un día sin folio es un día sin prueba.`]);
+  if (obVenc.length) a.push(["media",`${obVenc.length} deberes periódicos sin cumplimiento registrado a tiempo. Revíselos en Deberes.`]);
+  const vencidas = c.pqr.filter(x => estadoPQR(x).clase === "e-venc").length;
+  if (vencidas) a.push(["alta",`${vencidas} PQR de la comunidad con el plazo de respuesta vencido.`]);
+  const sinFirmaInt = c.folios.filter(f => f.estado === "cerrado" && !f.vistoBueno).length;
+  if (sinFirmaInt) a.push(["media",`${sinFirmaInt} folio(s) cerrados sin visto bueno de la interventoría.`]);
+  return a;
+}
+
+/* ============ Navegación ============ */
+const ICON = {
+  resumen:'<svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>',
+  bitacora:'<svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>',
+  avance:'<svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  tareas:'<svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3 6l1.5 1.5L7 5M3 12l1.5 1.5L7 11M3 18l1.5 1.5L7 17"/></svg>',
+  pqr:'<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+  mas:'<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg>'
+};
+const TABS = [["resumen","Resumen"],["bitacora","Bitácora"],["avance","Avance"],["tareas","Deberes"],["pqr","PQR"],["mas","Más"]];
+let vista = "resumen";
+function pintarNav(){
+  $("#navAbajo").innerHTML = TABS.map(([k,t]) => `<button data-nav="${k}" class="${vista===k || (k==="mas" && ["contrato","informe","ajustes"].includes(vista)) ? "activo":""}" aria-label="${t}">${ICON[k]}<span>${t}</span></button>`).join("");
+  $("#selContrato").innerHTML = S.contratos.map(c => `<option value="${c.id}" ${c.id===S.activo?"selected":""}>${esc(c.numero)}${c.demo?" (ejemplo)":""}</option>`).join("");
+  $("#rolChip").textContent = {residente:"Residente", interventor:"Interventor", admin:"Admin"}[S.ajustes.rol];
+}
+function ir(v){ vista = v; render(); window.scrollTo({top:0}); }
+function render(){
+  pintarNav();
+  const c = C();
+  const V = {resumen:vResumen, bitacora:vBitacora, avance:vAvance, tareas:vTareas, pqr:vPQR, mas:vMas, contrato:vContrato, informe:vInforme, ajustes:vAjustes}[vista] || vResumen;
+  $("#app").innerHTML = V(c) + `<footer class="credito">Desarrollada por Vibras Positivas HM — Derechos de Autor Reservados</footer>`;
+  if (vista === "resumen") setTimeout(() => {}, 0);
+}
+
+/* ============ Vistas ============ */
+function viaHTML(c, p){
+  if (p.sinInicio) return `<div class="card"><b>Sin acta de inicio.</b> <span class="tenue">Regístrela en Más → Contrato.</span></div>`;
+  const tot = Math.max(p.total, p.transcurridos, 1);
+  const pFin = p.total / tot * 100, pHoy = Math.min(100, p.transcurridos / tot * 100);
+  const susp = p.tramosSusp.map(t => `<div class="susp" style="left:${dias(c.fechaInicio,t.desde)/tot*100}%;width:${dias(t.desde,t.hasta)/tot*100}%"></div>`).join("");
+  return `<div class="card">
+    <div class="via" role="img" aria-label="Avance del plazo">
+      <div class="trans" style="width:${Math.min(pHoy,pFin)}%"></div>
+      ${p.vencido ? `<div class="venc" style="left:${pFin}%;width:${pHoy-pFin}%"></div>` : ""}
+      ${susp}<div class="hoy" style="left:calc(${pHoy}% - 2px)"></div>
+    </div>
+    <div class="via-lbl"><span><b>Inicio</b>${fechaCorta(c.fechaInicio)}</span><span style="text-align:center"><b>Fin del plazo</b>${fechaCorta(p.fin)}</span><span style="text-align:right"><b>Hoy</b>${fechaCorta(p.hoy)}</span></div>
+  </div>`;
+}
+function vResumen(c){
+  const p = plazo(c), av = avance(c), al = alertas(c);
+  const cerrados = c.folios.filter(f => f.estado === "cerrado");
+  const ultimo = cerrados.map(f => f.fecha).sort().pop();
+  const abiertas = c.pqr.filter(x => x.estado !== "respondida").length;
+  return `<h2 class="vista">${esc(c.numero)}</h2>
+  <p class="lead">${esc(c.objeto || "Complete los datos del contrato en Más → Contrato.")}</p>
+  ${viaHTML(c, p)}
+  <div class="grid">
+    <div class="card dato"><div class="n ${p.vencido?"rojo":""}">${p.sinInicio ? "—" : p.suspActiva ? "Susp." : p.vencido ? -p.restantes : p.restantes}</div><div class="t">${p.sinInicio ? "sin acta de inicio" : p.suspActiva ? "contrato suspendido" : p.vencido ? "días de retraso" : "días de plazo restantes"}</div></div>
+    <div class="card dato"><div class="n">${pct(av.pct)}</div><div class="t">avance ejecutado frente a ${p.sinInicio?"—":pct(p.pctTiempo)} del tiempo</div></div>
+    <div class="card dato"><div class="n">${cerrados.length}</div><div class="t">folios cerrados${ultimo ? `, el último del ${fechaCorta(ultimo)}` : ""}</div></div>
+    <div class="card dato"><div class="n ${abiertas?"rojo":""}">${abiertas}</div><div class="t">PQR de la comunidad sin responder</div></div>
+  </div>
+  <h3>Alertas</h3>
+  ${al.length ? al.map(x => `<div class="alerta ${x[0]==="media"?"media":""}">${esc(x[1])}</div>`).join("") : `<div class="alerta ok">Todo al día. No hay alertas para este contrato.</div>`}
+  <div class="acciones"><button class="btn pri" data-act="nuevo-folio">Nuevo folio de hoy</button><button class="btn" data-act="nueva-pqr">Registrar PQR</button><button class="btn" data-nav="informe">Informe mensual</button></div>
+  ${c.demo ? `<div class="card tenue" style="font-size:.88rem">Este es el contrato de ejemplo con los datos públicos del Contrato 011 de 2026. La fecha de inicio es la registrada en SECOP; verifíquela contra el acta de inicio real.</div>` : ""}`;
+}
+
+function vBitacora(c){
+  const fs = [...c.folios].sort((a,b) => b.n - a.n);
+  return `<h2 class="vista">Bitácora de obra</h2>
+  <p class="lead">Un folio por día. Al cerrarlo con la firma del residente queda sellado con una huella digital encadenada al folio anterior: si alguien lo modifica después, la verificación lo detecta.</p>
+  <div class="acciones"><button class="btn pri" data-act="nuevo-folio">Nuevo folio</button><button class="btn" data-act="verificar">Verificar integridad</button><button class="btn" data-act="imprimir-bitacora">Imprimir bitácora foliada</button></div>
+  <div class="lista">${fs.length ? fs.map(f => `<div class="fila" data-act="ver-folio" data-id="${f.id}" style="cursor:pointer">
+    <div class="folio-n">${String(f.n).padStart(3,"0")}</div>
+    <div class="cuerpo"><div class="titulo">${fechaCorta(f.fecha)} · ${esc(f.clima||"")}</div>
+    <div class="meta">${esc((f.actividades||"").slice(0,140))}${(f.actividades||"").length>140?"…":""}</div></div>
+    <span class="estado ${f.estado==="cerrado"?"e-cerr":"e-borr"}">${f.estado==="cerrado" ? (f.vistoBueno?"Cerrado y visado":"Cerrado") : "Borrador"}</span>
+  </div>`).join("") : `<div class="vacio">Todavía no hay folios. El primero debería ser el del acta de inicio.</div>`}</div>`;
+}
+
+function vAvance(c){
+  const p = plazo(c), av = avance(c);
+  return `<h2 class="vista">Avance de obra</h2>
+  <p class="lead">Las cantidades salen de lo registrado en cada folio. El avance se pondera por valor, igual que las actas de cobro.</p>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between"><b>Avance ejecutado</b><b>${pct(av.pct)}</b></div><div class="barra"><i style="width:${av.pct}%"></i></div>
+    <div style="display:flex;justify-content:space-between;margin-top:10px"><span class="tenue">Tiempo transcurrido</span><span class="tenue">${p.sinInicio?"—":pct(p.pctTiempo)}</span></div><div class="barra tiempo"><i style="width:${p.sinInicio?0:p.pctTiempo}%"></i></div>
+    <p class="tenue" style="margin:10px 0 0;font-size:.88rem">Ejecutado ${peso(av.ejecV)} de ${peso(av.totalV)} de costo directo.</p>
+  </div>
+  <div class="acciones"><button class="btn" data-act="nuevo-item">Agregar ítem</button></div>
+  <div class="card tabla"><table>
+    <thead><tr><th>Ítem</th><th>Descripción</th><th class="num">Contratado</th><th class="num">Ejecutado</th><th class="num">%</th><th></th></tr></thead>
+    <tbody>${c.items.map(i => { const e = av.m[i.id]; const pc = i.cantidad ? e / i.cantidad * 100 : 0; return `<tr>
+      <td>${esc(i.codigo)}</td><td>${esc(i.descripcion)}<div class="barra" style="margin-top:5px"><i style="width:${Math.min(100,pc)}%"></i></div></td>
+      <td class="num">${num(i.cantidad)} ${esc(i.unidad)}</td><td class="num">${num(e)} ${esc(i.unidad)}</td><td class="num ${pc>100?"rojo":""}">${pct(pc)}</td>
+      <td><button class="btn chico" data-act="editar-item" data-id="${i.id}">Editar</button></td></tr>`; }).join("") || `<tr><td colspan="6" class="vacio">Cargue los ítems del presupuesto oficial.</td></tr>`}</tbody>
+  </table></div>
+  ${c.demo ? `<p class="tenue" style="font-size:.85rem">En el ejemplo los ítems están por capítulo y en porcentaje, porque las cantidades detalladas del APU no son públicas. Con el presupuesto real se cargan en m, m², m³ o unidades.</p>` : ""}`;
+}
+
+function vTareas(c){
+  const per = {unica:"Una vez", diaria:"Diaria", semanal:"Semanal", mensual:"Mensual", pago:"Por pago"};
+  return `<h2 class="vista">Deberes del contrato</h2>
+  <p class="lead">Cada obligación con su frecuencia. Marque cuándo la cumplió y con qué soporte, para tener la prueba a la mano.</p>
+  <div class="acciones"><button class="btn" data-act="nueva-oblig">Agregar obligación</button></div>
+  <div class="lista">${c.obligaciones.map(o => { const e = estadoOblig(c, o); return `<div class="fila">
+    <div class="cuerpo"><div class="titulo">${esc(o.texto)}</div>
+    <div class="meta">${per[o.periodicidad]} · ${esc(o.fuente||"")}${e.ult?` · Última: ${fechaCorta(e.ult)}`:""}${e.prox && o.periodicidad!=="diaria"?` · Próxima: ${fechaCorta(e.prox)}`:""}</div>
+    ${o.cumplimientos.length ? `<div class="meta" style="margin-top:4px">Soporte: ${esc(o.cumplimientos[o.cumplimientos.length-1].nota||"sin nota")}</div>` : ""}</div>
+    <div style="display:grid;gap:6px;justify-items:end"><span class="estado ${e.clase}">${esc(e.txt)}</span>
+    ${o.periodicidad!=="diaria" ? `<button class="btn chico" data-act="cumplir" data-id="${o.id}">Registrar cumplimiento</button>` : ""}</div></div>`; }).join("") || `<div class="vacio">Sin obligaciones registradas.</div>`}</div>`;
+}
+
+function vPQR(c){
+  const ps = [...c.pqr].sort((a,b) => b.fecha.localeCompare(a.fecha));
+  return `<h2 class="vista">PQR de la comunidad</h2>
+  <p class="lead">Peticiones, quejas y reclamos de vecinos y comerciantes. Plazo de respuesta: ${PLAZO_PQR} días hábiles. Una PQR bien atendida es la mejor defensa frente a una reclamación por daños.</p>
+  <div class="acciones"><button class="btn pri" data-act="nueva-pqr">Registrar PQR</button></div>
+  <div class="lista">${ps.map(p => { const e = estadoPQR(p); return `<div class="fila" data-act="ver-pqr" data-id="${p.id}" style="cursor:pointer">
+    <div class="cuerpo"><div class="titulo">${esc(p.radicado)} · ${esc(p.tipo)} · ${esc(p.nombre)}</div>
+    <div class="meta">${[fechaCorta(p.fecha), p.direccion ? esc(p.direccion) : "", p.telefono ? "Tel. " + esc(enmascarar(p.telefono)) : ""].filter(Boolean).join(" · ")}</div>
+    <div class="meta">${esc((p.descripcion||"").slice(0,120))}</div></div>
+    <span class="estado ${e.clase}">${esc(e.txt)}</span></div>`; }).join("") || `<div class="vacio">Sin PQR registradas.</div>`}</div>
+  ${!esAdmin() ? `<p class="tenue" style="font-size:.82rem">Los teléfonos y documentos se muestran enmascarados. Solo el rol administrador los ve completos.</p>` : ""}`;
+}
+
+function vMas(){
+  return `<h2 class="vista">Más</h2>
+  <div class="lista">
+    <div class="fila" data-nav="contrato" style="cursor:pointer"><div class="cuerpo"><div class="titulo">Contrato, actas y pólizas</div><div class="meta">Datos, acta de inicio, suspensiones, prórrogas y garantías</div></div></div>
+    <div class="fila" data-nav="informe" style="cursor:pointer"><div class="cuerpo"><div class="titulo">Informe mensual</div><div class="meta">Listo para imprimir o guardar en PDF y entregar a la interventoría</div></div></div>
+    <div class="fila" data-nav="ajustes" style="cursor:pointer"><div class="cuerpo"><div class="titulo">Ajustes y respaldo</div><div class="meta">Rol, PIN, exportar e importar .json, instalar la app</div></div></div>
+  </div>`;
+}
+
+function vContrato(c){
+  const tipoEv = {suspension:"Suspensión", prorroga:"Prórroga", adicion:"Adición en valor"};
+  const p = plazo(c);
+  return `<h2 class="vista">Contrato</h2>
+  <p class="lead">Estos datos alimentan el cálculo del plazo, las alertas y los informes.</p>
+  <div class="card"><form class="form" id="fContrato">
+    <label>Número del contrato<input name="numero" value="${esc(c.numero)}" required></label>
+    <label>Objeto<textarea name="objeto">${esc(c.objeto)}</textarea></label>
+    <label>Alcance<textarea name="alcance">${esc(c.alcance)}</textarea></label>
+    <div class="dos"><label>Entidad contratante<input name="entidad" value="${esc(c.entidad)}"></label><label>NIT entidad<input name="nitEntidad" value="${esc(c.nitEntidad)}"></label></div>
+    <div class="dos"><label>Contratista<input name="contratista" value="${esc(c.contratista)}"></label><label>NIT contratista<input name="nitContratista" value="${esc(c.nitContratista)}"></label></div>
+    <div class="dos"><label>Representante legal<input name="representante" value="${esc(c.representante)}"></label><label>Interventoría<input name="interventoria" value="${esc(c.interventoria)}"></label></div>
+    <div class="dos"><label>Supervisor de la entidad<input name="supervisor" value="${esc(c.supervisor)}"></label><label>Lugar de ejecución<input name="lugar" value="${esc(c.lugar)}"></label></div>
+    <div class="tres"><label>Valor ($)<input name="valor" type="number" min="0" step="1" value="${c.valor}"></label><label>Plazo (meses)<input name="plazoMeses" type="number" min="0" value="${c.plazoMeses}"></label><label>Plazo (días)<input name="plazoDias" type="number" min="0" value="${c.plazoDias}"></label></div>
+    <div class="dos"><label>Fecha de firma<input name="fechaFirma" type="date" value="${esc(c.fechaFirma)}"></label><label>Fecha del acta de inicio<input name="fechaInicio" type="date" value="${esc(c.fechaInicio)}"></label></div>
+    <div class="acciones"><button class="btn pri" type="submit">Guardar contrato</button></div>
+  </form></div>
+
+  <h3>Actas: suspensiones, prórrogas y adiciones</h3>
+  ${!p.sinInicio ? `<p class="tenue" style="margin-top:-4px;font-size:.9rem">Fin original: ${fechaCorta(p.finOriginal)}. Fin actual: <b>${fechaCorta(p.fin)}</b> (${p.prorrogaDias} días de prórroga, ${p.suspDias} días suspendido).</p>` : ""}
+  <div class="acciones"><button class="btn" data-act="nuevo-evento" data-tipo="suspension">Registrar suspensión</button><button class="btn" data-act="nuevo-evento" data-tipo="prorroga">Registrar prórroga</button><button class="btn" data-act="nuevo-evento" data-tipo="adicion">Registrar adición</button></div>
+  <div class="lista">${c.eventos.map(e => `<div class="fila"><div class="cuerpo"><div class="titulo">${tipoEv[e.tipo]}${e.tipo==="suspension"?` desde ${fechaCorta(e.desde)} ${e.hasta?`hasta ${fechaCorta(e.hasta)}`:"(vigente)"}`:""}${e.tipo==="prorroga"?`: ${e.meses?e.meses+" meses ":""}${e.dias?e.dias+" días":""}`:""}${e.tipo==="adicion"?`: ${peso(e.valor)}`:""}</div>
+    <div class="meta">${esc(e.soporte||"Sin soporte registrado")}${e.nota?" · "+esc(e.nota):""}</div></div>
+    <div style="display:grid;gap:6px">${e.tipo==="suspension"&&!e.hasta?`<button class="btn chico" data-act="reanudar" data-id="${e.id}">Registrar reanudación</button>`:""}${esAdmin()?`<button class="btn chico peligro" data-act="borrar-evento" data-id="${e.id}">Eliminar</button>`:""}</div></div>`).join("") || `<div class="vacio">Sin actas registradas. Si hubo suspensiones o prórrogas, regístrelas con el número del acta: son la defensa frente a multas por retraso.</div>`}</div>
+
+  <h3>Pólizas y garantías</h3>
+  <div class="acciones"><button class="btn" data-act="nueva-poliza">Agregar póliza</button></div>
+  <div class="lista">${c.polizas.map(po => `<div class="fila"><div class="cuerpo"><div class="titulo">${esc(po.tipo)}</div>
+    <div class="meta">${esc(po.aseguradora||"Aseguradora sin registrar")} · N.º ${esc(po.numero||"—")} · ${po.valor?peso(po.valor):"Valor por registrar"} · Vigente hasta ${po.vigHasta?fechaCorta(po.vigHasta):"(se cuenta desde el recibo de obra)"}</div></div>
+    <button class="btn chico" data-act="editar-poliza" data-id="${po.id}">Editar</button></div>`).join("") || `<div class="vacio">Sin pólizas registradas.</div>`}</div>
+
+  <h3>Administrar</h3>
+  <div class="acciones"><button class="btn" data-act="nuevo-contrato">Crear otro contrato</button>
+  ${esAdmin() ? `<button class="btn peligro" data-act="borrar-contrato">Eliminar este contrato</button>` : `<span class="tenue" style="font-size:.85rem;align-self:center">Para eliminar contratos o actas se necesita el rol administrador.</span>`}</div>`;
+}
+
+function vInforme(c){
+  const hoy = hoyISO(); const mes = hoy.slice(0,7);
+  return `<h2 class="vista">Informe mensual</h2>
+  <p class="lead">Resume el estado del contrato, el avance, los folios del mes, las obligaciones y las PQR. Se imprime o se guarda como PDF desde el diálogo de impresión.</p>
+  <div class="card"><form class="form" id="fInforme"><label>Mes del informe<input type="month" name="mes" value="${mes}" required></label>
+  <div class="acciones"><button class="btn pri" type="submit">Generar e imprimir</button></div></form></div>`;
+}
+
+function vAjustes(){
+  return `<h2 class="vista">Ajustes y respaldo</h2>
+  <div class="card"><form class="form" id="fRol"><label>Rol en este dispositivo<select name="rol">
+    <option value="residente" ${S.ajustes.rol==="residente"?"selected":""}>Residente de obra</option>
+    <option value="interventor" ${S.ajustes.rol==="interventor"?"selected":""}>Interventor</option>
+    <option value="admin" ${S.ajustes.rol==="admin"?"selected":""}>Administrador (requiere PIN)</option></select></label>
+    <label>Tema<select name="tema"><option value="auto" ${S.ajustes.tema==="auto"?"selected":""}>Según el sistema</option><option value="light" ${S.ajustes.tema==="light"?"selected":""}>Claro</option><option value="dark" ${S.ajustes.tema==="dark"?"selected":""}>Oscuro</option></select></label>
+    <div class="acciones"><button class="btn pri" type="submit">Aplicar</button><button class="btn" type="button" data-act="cambiar-pin">${S.ajustes.pinHash?"Cambiar PIN de administrador":"Crear PIN de administrador"}</button></div></form></div>
+  <h3>Respaldo</h3>
+  <p class="tenue" style="margin-top:-4px">Los datos viven en este dispositivo. Exporte un respaldo .json al menos una vez por semana y compártalo por WhatsApp o correo.</p>
+  <div class="acciones"><button class="btn pri" data-act="exportar">Exportar respaldo .json</button><label class="btn" style="display:inline-block">Importar respaldo<input type="file" accept="application/json,.json" id="inImportar" hidden></label></div>
+  <div class="acciones"><button class="btn" data-act="instalar" id="btnInstalar" ${window._promptInstalar?"":"hidden"}>Instalar la app en este dispositivo</button></div>
+  <p class="tenue" style="font-size:.82rem">Espacio usado: ${num(new Blob([localStorage.getItem(KEY)||""]).size/1024/1024,2)} MB de aproximadamente 5 MB disponibles en el navegador.</p>`;
+}
+
+/* ============ Hoja modal ============ */
+function abrir(html){ $("#hoja").innerHTML = html; $("#velo").classList.add("abierto"); const f = $("#hoja").querySelector("input,textarea,select,button"); if (f) f.focus(); }
+function cerrar(){ $("#velo").classList.remove("abierto"); $("#hoja").innerHTML = ""; }
+$("#velo").addEventListener("click", e => { if (e.target.id === "velo") cerrar(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") cerrar(); });
+const cab = t => `<div class="hoja-cab"><h3>${t}</h3><button class="btn chico" data-act="cerrar">Cerrar</button></div>`;
+
+/* ============ Firma en pantalla ============ */
+function montarFirma(id){
+  const cv = document.getElementById(id); if (!cv) return;
+  const r = cv.getBoundingClientRect(); const k = window.devicePixelRatio || 1;
+  cv.width = r.width * k; cv.height = r.height * k;
+  const x = cv.getContext("2d"); x.scale(k, k); x.lineWidth = 2.2; x.lineCap = "round"; x.strokeStyle = "#111";
+  let dib = false; cv._vacio = true;
+  const pos = e => { const b = cv.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
+  cv.onpointerdown = e => { dib = true; cv.setPointerCapture(e.pointerId); const [a,b] = pos(e); x.beginPath(); x.moveTo(a,b); };
+  cv.onpointermove = e => { if (!dib) return; const [a,b] = pos(e); x.lineTo(a,b); x.stroke(); cv._vacio = false; };
+  cv.onpointerup = () => dib = false;
+}
+const firmaData = id => { const cv = document.getElementById(id); return cv && !cv._vacio ? cv.toDataURL("image/png") : null; };
+function limpiarFirma(id){ const cv = document.getElementById(id); cv.getContext("2d").clearRect(0,0,cv.width,cv.height); cv._vacio = true; }
+
+/* ============ Fotos ============ */
+function comprimir(file){
+  return new Promise((ok, mal) => {
+    const img = new Image(); const url = URL.createObjectURL(file);
+    img.onload = () => { const m = 1100, s = Math.min(1, m / Math.max(img.width, img.height));
+      const cv = document.createElement("canvas"); cv.width = img.width * s; cv.height = img.height * s;
+      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url); ok(cv.toDataURL("image/jpeg", 0.6)); };
+    img.onerror = mal; img.src = url;
+  });
+}
+
+/* ============ Folios ============ */
+let borradorFotos = [];
+function formFolio(c, f){
+  const hoy = hoyISO();
+  f = f || {id:null, fecha:hoy, clima:"Soleado", horasLluvia:0, personal:{oficiales:0, ayudantes:0, operadores:0, profesionales:0}, equipos:"", actividades:"", cantidades:[], observaciones:"", fotos:[], geo:null};
+  borradorFotos = [...(f.fotos || [])];
+  const n = f.n || (Math.max(0, ...c.folios.map(x => x.n)) + 1);
+  const opItems = c.items.map(i => `<option value="${i.id}">${esc(i.codigo)} · ${esc(i.descripcion)} (${esc(i.unidad)})</option>`).join("");
+  return cab(`Folio ${String(n).padStart(3,"0")}`) + `<form class="form" id="fFolio" data-id="${f.id||""}">
+    <div class="dos"><label>Fecha<input type="date" name="fecha" value="${f.fecha}" max="${hoy}" required></label>
+    <label>Clima<select name="clima">${["Soleado","Nublado","Lluvia ligera","Lluvia fuerte","Tormenta"].map(o => `<option ${f.clima===o?"selected":""}>${o}</option>`).join("")}</select></label></div>
+    <label>Horas perdidas por lluvia u otra causa ajena<input type="number" name="horasLluvia" min="0" max="24" step="0.5" value="${f.horasLluvia}"></label>
+    <div class="dos"><label>Profesionales<input type="number" min="0" name="p_profesionales" value="${f.personal.profesionales}"></label><label>Oficiales<input type="number" min="0" name="p_oficiales" value="${f.personal.oficiales}"></label></div>
+    <div class="dos"><label>Ayudantes<input type="number" min="0" name="p_ayudantes" value="${f.personal.ayudantes}"></label><label>Operadores<input type="number" min="0" name="p_operadores" value="${f.personal.operadores}"></label></div>
+    <label>Equipos en obra<input name="equipos" value="${esc(f.equipos)}" placeholder="Retroexcavadora, volqueta, vibrocompactador…"></label>
+    <label>Actividades ejecutadas<textarea name="actividades" required placeholder="Frente, tramo, abscisas y trabajos realizados">${esc(f.actividades)}</textarea></label>
+    <div><b style="font-size:.88rem">Cantidades ejecutadas hoy</b>
+      <div id="cantLista" class="lista" style="margin:8px 0">${(f.cantidades||[]).map(q => filaCant(opItems, q)).join("")}</div>
+      ${c.items.length ? `<button class="btn chico" type="button" data-act="add-cant">Agregar cantidad</button>` : `<span class="tenue" style="font-size:.85rem">Cargue ítems en Avance para registrar cantidades.</span>`}</div>
+    <label>Novedades, órdenes recibidas y observaciones<textarea name="observaciones">${esc(f.observaciones)}</textarea></label>
+    <div><b style="font-size:.88rem">Fotos (máximo 4)</b><div class="fotos" id="fotosPrev" style="margin:8px 0">${borradorFotos.map((u,i)=>`<img src="${u}" alt="Foto ${i+1}">`).join("")}</div>
+      <label class="btn chico" style="display:inline-block">Tomar o subir foto<input type="file" accept="image/*" capture="environment" id="inFoto" hidden></label>
+      <button class="btn chico" type="button" data-act="quitar-fotos">Quitar fotos</button></div>
+    <div><b style="font-size:.88rem">Ubicación</b> <span class="tenue" id="geoTxt">${f.geo?`${f.geo.lat.toFixed(5)}, ${f.geo.lng.toFixed(5)}`:"sin registrar"}</span>
+      <input type="hidden" name="geo" value="${f.geo?esc(JSON.stringify(f.geo)):""}"> <button class="btn chico" type="button" data-act="geo">Tomar ubicación</button></div>
+    <div><b style="font-size:.88rem">Firma del residente de obra</b><div class="firma-caja" style="margin-top:6px"><canvas id="cvRes"></canvas></div>
+      <button class="btn chico" type="button" data-act="limpiar-firma" data-cv="cvRes" style="margin-top:6px">Borrar firma</button></div>
+    <label>Nombre del residente<input name="residente" value="${esc(f.residente||"")}" placeholder="Nombre completo y matrícula"></label>
+    <div class="acciones"><button class="btn" type="submit" name="modo" value="borrador">Guardar borrador</button><button class="btn pri" type="submit" name="modo" value="cerrar">Firmar y cerrar folio</button></div>
+    <p class="tenue" style="font-size:.82rem;margin:0">Al cerrar el folio ya no se puede editar. Las correcciones se hacen como anotaciones fechadas.</p>
+  </form>`;
+}
+function filaCant(opItems, q){
+  return `<div class="dos cant"><select name="cItem">${opItems.replace(`value="${q?q.itemId:""}"`, `value="${q?q.itemId:""}" selected`)}</select><input type="number" name="cCant" step="any" min="0" value="${q?q.cant:""}" placeholder="Cantidad"></div>`;
+}
+function contenidoFolio(f){ // lo que se sella en la huella
+  return JSON.stringify({n:f.n, fecha:f.fecha, clima:f.clima, horasLluvia:f.horasLluvia, personal:f.personal, equipos:f.equipos, actividades:f.actividades,
+    cantidades:f.cantidades, observaciones:f.observaciones, fotos:f.fotos, geo:f.geo, residente:f.residente, firmaResidente:f.firmaResidente, cerradoEn:f.cerradoEn, prevHash:f.prevHash});
+}
+async function guardarFolio(form, modo){
+  const c = C(); const fd = new FormData(form); const id = form.dataset.id;
+  let f = id ? c.folios.find(x => x.id === id) : null;
+  if (!f){
+    if (c.folios.some(x => x.estado === "borrador")) { toast("Ya hay un folio en borrador. Ciérrelo o elimínelo primero."); return; }
+    f = {id:uid(), n:Math.max(0, ...c.folios.map(x => x.n)) + 1, estado:"borrador", creado:horaISO(), anotaciones:[]}; c.folios.push(f);
+  }
+  const fecha = fd.get("fecha");
+  if (c.folios.some(x => x.id !== f.id && x.fecha === fecha && x.estado === "cerrado") && !confirm("Ya existe un folio cerrado con esa fecha. ¿Registrar otro folio para el mismo día?")) return;
+  Object.assign(f, {fecha, clima:fd.get("clima"), horasLluvia:Number(fd.get("horasLluvia"))||0,
+    personal:{profesionales:+fd.get("p_profesionales")||0, oficiales:+fd.get("p_oficiales")||0, ayudantes:+fd.get("p_ayudantes")||0, operadores:+fd.get("p_operadores")||0},
+    equipos:fd.get("equipos").trim(), actividades:fd.get("actividades").trim(), observaciones:fd.get("observaciones").trim(), residente:fd.get("residente").trim(),
+    fotos:[...borradorFotos], geo: fd.get("geo") ? JSON.parse(fd.get("geo")) : null,
+    cantidades:[...form.querySelectorAll(".cant")].map(r => ({itemId:r.querySelector("select").value, cant:Number(r.querySelector("input").value)||0})).filter(q => q.cant > 0)});
+  const firma = firmaData("cvRes"); if (firma) f.firmaResidente = firma;
+  if (modo === "cerrar"){
+    if (!f.firmaResidente){ toast("Falta la firma del residente para cerrar el folio."); return; }
+    if (!f.residente){ toast("Escriba el nombre del residente."); return; }
+    const previos = c.folios.filter(x => x.estado === "cerrado").sort((a,b) => a.n - b.n);
+    f.prevHash = previos.length ? previos[previos.length - 1].hash : "GENESIS";
+    f.cerradoEn = horaISO(); f.estado = "cerrado";
+    f.hash = await sha256(contenidoFolio(f));
+  }
+  if (guardar()){ cerrar(); toast(modo === "cerrar" ? `Folio ${f.n} cerrado y sellado.` : "Borrador guardado."); render(); }
+}
+function verFolio(f){
+  const c = C(); const items = Object.fromEntries(c.items.map(i => [i.id, i]));
+  return cab(`Folio ${String(f.n).padStart(3,"0")} · ${fechaCorta(f.fecha)}`) + `
+    <p><span class="estado ${f.estado==="cerrado"?"e-cerr":"e-borr"}">${f.estado==="cerrado"?"Cerrado":"Borrador"}</span> ${f.cerradoEn?`<span class="tenue" style="font-size:.85rem">Cerrado el ${esc(f.cerradoEn.replace("T"," ").slice(0,16))} (hora Colombia)</span>`:""}</p>
+    <div class="card"><b>Clima:</b> ${esc(f.clima)}${f.horasLluvia?` · ${f.horasLluvia} h perdidas`:""}<br>
+      <b>Personal:</b> ${f.personal.profesionales} profesionales, ${f.personal.oficiales} oficiales, ${f.personal.ayudantes} ayudantes, ${f.personal.operadores} operadores<br>
+      <b>Equipos:</b> ${esc(f.equipos||"—")}</div>
+    <div class="card"><b>Actividades</b><p style="white-space:pre-wrap;margin:6px 0 0">${esc(f.actividades)}</p></div>
+    ${f.cantidades.length?`<div class="card tabla"><table><thead><tr><th>Ítem</th><th class="num">Cantidad</th></tr></thead><tbody>${f.cantidades.map(q=>`<tr><td>${esc(items[q.itemId]?items[q.itemId].codigo+" · "+items[q.itemId].descripcion:"Ítem eliminado")}</td><td class="num">${num(q.cant)} ${esc(items[q.itemId]?.unidad||"")}</td></tr>`).join("")}</tbody></table></div>`:""}
+    ${f.observaciones?`<div class="card"><b>Observaciones</b><p style="white-space:pre-wrap;margin:6px 0 0">${esc(f.observaciones)}</p></div>`:""}
+    ${f.fotos.length?`<div class="fotos" style="margin-bottom:12px">${f.fotos.map((u,i)=>`<img src="${u}" alt="Foto ${i+1} del folio">`).join("")}</div>`:""}
+    ${f.geo?`<p class="tenue" style="font-size:.85rem">Ubicación: ${f.geo.lat.toFixed(5)}, ${f.geo.lng.toFixed(5)}</p>`:""}
+    <div class="grid"><div class="card"><b>Residente</b><br>${f.firmaResidente?`<img class="firma-img" src="${f.firmaResidente}" alt="Firma del residente">`:"<span class='tenue'>Sin firma</span>"}<br>${esc(f.residente||"")}</div>
+    <div class="card"><b>Visto bueno de interventoría</b><br>${f.vistoBueno?`<img class="firma-img" src="${f.vistoBueno.firma}" alt="Firma del interventor"><br>${esc(f.vistoBueno.nombre)}<br><span class="tenue" style="font-size:.8rem">${esc(f.vistoBueno.fecha.replace("T"," ").slice(0,16))}</span>`:"<span class='tenue'>Pendiente</span>"}</div></div>
+    ${f.anotaciones.length?`<h3>Anotaciones posteriores</h3>${f.anotaciones.map(a=>`<div class="card"><span class="tenue" style="font-size:.82rem">${esc(a.fecha.replace("T"," ").slice(0,16))} · ${esc(a.autor)}</span><p style="margin:4px 0 0;white-space:pre-wrap">${esc(a.texto)}</p></div>`).join("")}`:""}
+    ${f.hash?`<p class="mono tenue">Huella: ${f.hash}</p>`:""}
+    <div class="acciones">
+      ${f.estado==="borrador"?`<button class="btn pri" data-act="editar-folio" data-id="${f.id}">Continuar editando</button><button class="btn peligro" data-act="borrar-folio" data-id="${f.id}">Eliminar borrador</button>`:""}
+      ${f.estado==="cerrado"&&!f.vistoBueno?`<button class="btn pri" data-act="visar" data-id="${f.id}">Visto bueno del interventor</button>`:""}
+      ${f.estado==="cerrado"?`<button class="btn" data-act="anotar" data-id="${f.id}">Agregar anotación</button><button class="btn" data-act="imprimir-folio" data-id="${f.id}">Imprimir folio</button>`:""}
+    </div>`;
+}
+async function verificar(){
+  const c = C(); const fs = c.folios.filter(f => f.estado === "cerrado").sort((a,b) => a.n - b.n);
+  let prev = "GENESIS", malos = [];
+  for (const f of fs){
+    const h = await sha256(contenidoFolio(f));
+    if (h !== f.hash || f.prevHash !== prev) malos.push(f.n);
+    if (f.vistoBueno && f.vistoBueno.hash !== await sha256(f.hash + f.vistoBueno.firma + f.vistoBueno.nombre + f.vistoBueno.fecha)) malos.push(f.n);
+    prev = f.hash;
+  }
+  abrir(cab("Verificación de integridad") + (fs.length ? (malos.length
+    ? `<div class="alerta">Los folios ${[...new Set(malos)].join(", ")} no coinciden con su huella. Fueron modificados después de cerrarse o la cadena está rota.</div>`
+    : `<div class="alerta ok">Los ${fs.length} folios cerrados están íntegros. Ninguno fue modificado después de su cierre.</div>`) : `<div class="vacio">No hay folios cerrados para verificar.</div>`));
+}
+
+/* ============ Impresión ============ */
+const encabezadoImp = c => `<h1>${esc(c.numero)}</h1><p style="margin:0 0 4px">${esc(c.objeto)}</p><p style="margin:0 0 12px;font-size:9.5pt">Contratante: ${esc(c.entidad)} · Contratista: ${esc(c.contratista)} · Interventoría: ${esc(c.interventoria)}</p>`;
+function htmlFolioImp(c, f){
+  const items = Object.fromEntries(c.items.map(i => [i.id, i]));
+  return `<div class="salto"></div>${encabezadoImp(c)}<h2 style="font-size:13pt">Folio ${String(f.n).padStart(3,"0")} · ${fechaCorta(f.fecha)}</h2>
+    <p><b>Clima:</b> ${esc(f.clima)} ${f.horasLluvia?`(${f.horasLluvia} h perdidas)`:""} · <b>Personal:</b> ${f.personal.profesionales} prof., ${f.personal.oficiales} ofic., ${f.personal.ayudantes} ayud., ${f.personal.operadores} oper. · <b>Equipos:</b> ${esc(f.equipos||"—")}</p>
+    <p><b>Actividades:</b><br>${esc(f.actividades).replace(/\n/g,"<br>")}</p>
+    ${f.cantidades.length?`<table><tr><th>Ítem</th><th>Cantidad</th></tr>${f.cantidades.map(q=>`<tr><td>${esc(items[q.itemId]?.codigo||"")} ${esc(items[q.itemId]?.descripcion||"")}</td><td>${num(q.cant)} ${esc(items[q.itemId]?.unidad||"")}</td></tr>`).join("")}</table>`:""}
+    ${f.observaciones?`<p><b>Observaciones:</b><br>${esc(f.observaciones).replace(/\n/g,"<br>")}</p>`:""}
+    ${f.fotos.map(u=>`<img src="${u}" style="width:31%;margin:0 1% 6px 0">`).join("")}
+    <table style="margin-top:14px"><tr><td style="width:50%">${f.firmaResidente?`<img src="${f.firmaResidente}" style="height:60px">`:""}<br>${esc(f.residente||"")}<br>Residente de obra</td>
+    <td>${f.vistoBueno?`<img src="${f.vistoBueno.firma}" style="height:60px"><br>${esc(f.vistoBueno.nombre)}`:"<br><br>______________________"}<br>Interventoría</td></tr></table>
+    ${f.anotaciones.map(a=>`<p style="font-size:9pt"><b>Anotación ${esc(a.fecha.slice(0,16).replace("T"," "))} (${esc(a.autor)}):</b> ${esc(a.texto)}</p>`).join("")}
+    <p style="font-size:7.5pt;word-break:break-all">Huella SHA-256: ${esc(f.hash||"borrador sin sellar")}</p>`;
+}
+function imprimir(html){ $("#imprimir").innerHTML = html.replace('<div class="salto"></div>',"") + `<p style="font-size:8pt;margin-top:16px">Generado con Bitácora de Obra Pro el ${esc(ahoraTexto())} (hora Colombia). Desarrollada por Vibras Positivas HM — Derechos de Autor Reservados.</p>`; setTimeout(() => window.print(), 150); }
+function informe(c, mes){
+  const p = plazo(c), av = avance(c);
+  const fs = c.folios.filter(f => f.fecha.startsWith(mes)).sort((a,b) => a.n - b.n);
+  const pq = c.pqr.filter(x => x.fecha.startsWith(mes));
+  const lluvia = fs.reduce((s,f) => s + (Number(f.horasLluvia)||0), 0);
+  const [y, m] = mes.split("-"); const nombreMes = new Date(Date.UTC(+y, +m-1, 1)).toLocaleDateString("es-CO",{timeZone:"UTC",month:"long",year:"numeric"});
+  const mEj = {}; fs.forEach(f => f.cantidades.forEach(q => mEj[q.itemId] = (mEj[q.itemId]||0) + q.cant));
+  return `${encabezadoImp(c)}<h2 style="font-size:13pt">Informe mensual de ejecución: ${esc(nombreMes)}</h2>
+    <h3>1. Estado del plazo</h3><p>Acta de inicio: ${fechaCorta(c.fechaInicio)} · Fin original: ${fechaCorta(p.finOriginal)} · Fin actual: ${fechaCorta(p.fin)} · Prórrogas: ${p.prorrogaDias} días · Suspensiones: ${p.suspDias} días · ${p.vencido?`<b>Plazo vencido hace ${-p.restantes} días</b>`:p.suspActiva?"Contrato suspendido":`${p.restantes} días restantes`}</p>
+    <h3>2. Avance</h3><p>Avance ejecutado acumulado: <b>${pct(av.pct)}</b> (${peso(av.ejecV)} de ${peso(av.totalV)}) frente a ${pct(p.pctTiempo)} del tiempo transcurrido.</p>
+    <table><tr><th>Ítem</th><th>Contratado</th><th>Ejecutado en el mes</th><th>Acumulado</th></tr>${c.items.map(i=>`<tr><td>${esc(i.codigo)} ${esc(i.descripcion)}</td><td>${num(i.cantidad)} ${esc(i.unidad)}</td><td>${num(mEj[i.id]||0)}</td><td>${num(av.m[i.id])}</td></tr>`).join("")}</table>
+    <h3>3. Bitácora del mes</h3><p>${fs.length} folios (${fs.filter(f=>f.estado==="cerrado").length} cerrados, ${fs.filter(f=>f.vistoBueno).length} con visto bueno). Horas perdidas por lluvia u otras causas ajenas: ${num(lluvia,1)}.</p>
+    <table><tr><th>Folio</th><th>Fecha</th><th>Clima</th><th>Actividades</th></tr>${fs.map(f=>`<tr><td>${f.n}</td><td>${fechaCorta(f.fecha)}</td><td>${esc(f.clima)}</td><td>${esc(f.actividades.slice(0,160))}</td></tr>`).join("")||"<tr><td colspan=4>Sin folios en el mes.</td></tr>"}</table>
+    <h3>4. Obligaciones</h3><table><tr><th>Obligación</th><th>Estado</th></tr>${c.obligaciones.map(o=>`<tr><td>${esc(o.texto)}</td><td>${esc(estadoOblig(c,o).txt)}</td></tr>`).join("")}</table>
+    <h3>5. Gestión social: PQR</h3><p>${pq.length} PQR recibidas en el mes, ${pq.filter(x=>x.estado==="respondida").length} respondidas, ${pq.filter(x=>estadoPQR(x).clase==="e-venc").length} vencidas.</p>
+    <h3>6. Actas y garantías</h3><p>${c.eventos.map(e=>`${e.tipo==="suspension"?"Suspensión":e.tipo==="prorroga"?"Prórroga":"Adición"} (${esc(e.soporte||"sin soporte")})`).join("; ")||"Sin actas de modificación registradas."}</p>
+    <table style="margin-top:28px"><tr><td style="width:50%"><br><br>______________________<br>Residente / Director de obra</td><td><br><br>______________________<br>Interventoría</td></tr></table>`;
+}
+
+/* ============ Formularios pequeños ============ */
+function formEvento(tipo){
+  const t = {suspension:"Registrar suspensión", prorroga:"Registrar prórroga", adicion:"Registrar adición en valor"}[tipo];
+  return cab(t) + `<form class="form" id="fEvento" data-tipo="${tipo}">
+    ${tipo==="suspension"?`<div class="dos"><label>Suspendido desde<input type="date" name="desde" required></label><label>Reanudado el (si ya se reanudó)<input type="date" name="hasta"></label></div>`:""}
+    ${tipo==="prorroga"?`<div class="dos"><label>Meses<input type="number" min="0" name="meses" value="0"></label><label>Días<input type="number" min="0" name="dias" value="0"></label></div>`:""}
+    ${tipo==="adicion"?`<label>Valor adicionado ($)<input type="number" min="0" name="valor" required></label>`:""}
+    <label>Soporte (número y fecha del acta u otrosí)<input name="soporte" required placeholder="Acta de suspensión N.º 1 del …"></label>
+    <label>Motivo<textarea name="nota" placeholder="Causa de fuerza mayor, ítems no previstos, lluvias…"></textarea></label>
+    <p class="tenue" style="font-size:.82rem;margin:0">Solo registre actas firmadas por la entidad y el contratista. Recuerde ampliar las pólizas si cambia el plazo o el valor.</p>
+    <div class="acciones"><button class="btn pri" type="submit">Guardar</button></div></form>`;
+}
+function formPoliza(po){
+  po = po || {tipo:"", aseguradora:"", numero:"", valor:0, vigHasta:"", regla:""};
+  return cab(po.id?"Editar póliza":"Agregar póliza") + `<form class="form" id="fPoliza" data-id="${po.id||""}">
+    <label>Amparo<input name="tipo" value="${esc(po.tipo)}" required></label>
+    <div class="dos"><label>Aseguradora<input name="aseguradora" value="${esc(po.aseguradora)}"></label><label>Número<input name="numero" value="${esc(po.numero)}"></label></div>
+    <div class="dos"><label>Valor asegurado ($)<input type="number" min="0" name="valor" value="${po.valor}"></label><label>Vigente hasta<input type="date" name="vigHasta" value="${esc(po.vigHasta)}"></label></div>
+    <label>Debe cubrir<select name="regla"><option value="" ${!po.regla?"selected":""}>Sin regla automática</option><option value="plazo" ${po.regla==="plazo"?"selected":""}>El plazo de ejecución</option><option value="plazo+4m" ${po.regla==="plazo+4m"?"selected":""}>El plazo más 4 meses</option><option value="recibo+5a" ${po.regla==="recibo+5a"?"selected":""}>5 años desde el recibo de obra</option></select></label>
+    <div class="acciones"><button class="btn pri" type="submit">Guardar</button>${po.id&&esAdmin()?`<button class="btn peligro" type="button" data-act="borrar-poliza" data-id="${po.id}">Eliminar</button>`:""}</div></form>`;
+}
+function formItem(i){
+  i = i || {codigo:"", descripcion:"", unidad:"m", cantidad:0, vrUnit:0};
+  return cab(i.id?"Editar ítem":"Agregar ítem") + `<form class="form" id="fItem" data-id="${i.id||""}">
+    <div class="dos"><label>Código<input name="codigo" value="${esc(i.codigo)}" required></label><label>Unidad<input name="unidad" value="${esc(i.unidad)}" required></label></div>
+    <label>Descripción<input name="descripcion" value="${esc(i.descripcion)}" required></label>
+    <div class="dos"><label>Cantidad contratada<input type="number" step="any" min="0" name="cantidad" value="${i.cantidad}" required></label><label>Valor unitario ($)<input type="number" step="any" min="0" name="vrUnit" value="${i.vrUnit}" required></label></div>
+    <div class="acciones"><button class="btn pri" type="submit">Guardar</button>${i.id&&esAdmin()?`<button class="btn peligro" type="button" data-act="borrar-item" data-id="${i.id}">Eliminar</button>`:""}</div></form>`;
+}
+function formPQR(){
+  return cab("Registrar PQR") + `<form class="form" id="fPQR">
+    <div class="dos"><label>Fecha de recibo<input type="date" name="fecha" value="${hoyISO()}" max="${hoyISO()}" required></label>
+    <label>Tipo<select name="tipo"><option>Petición</option><option>Queja</option><option>Reclamo por daños</option><option>Sugerencia</option></select></label></div>
+    <label>Nombre de quien la presenta<input name="nombre" required></label>
+    <div class="dos"><label>Teléfono<input name="telefono" inputmode="tel"></label><label>Dirección o negocio<input name="direccion"></label></div>
+    <label>Descripción<textarea name="descripcion" required></textarea></label>
+    <p class="aviso-datos"><b>Aviso de privacidad.</b> Los datos personales se recogen solo para atender esta solicitud y hacer seguimiento a la obra, conforme a la Ley 1581 de 2012. La persona puede conocer, actualizar o pedir la supresión de sus datos. Teléfonos y documentos se muestran enmascarados a quien no sea administrador.</p>
+    <label style="display:flex;gap:8px;align-items:center;font-weight:400"><input type="checkbox" name="acepta" required style="width:auto"> La persona autoriza el tratamiento de sus datos</label>
+    <div class="acciones"><button class="btn pri" type="submit">Radicar</button></div></form>`;
+}
+function verPQR(p){
+  const e = estadoPQR(p);
+  return cab(esc(p.radicado)) + `<p><span class="estado ${e.clase}">${esc(e.txt)}</span></p>
+    <div class="card"><b>${esc(p.tipo)}</b> · ${fechaCorta(p.fecha)}<br>${esc(p.nombre)} · Tel. ${esc(enmascarar(p.telefono))} · ${esc(p.direccion||"")}<p style="white-space:pre-wrap;margin:8px 0 0">${esc(p.descripcion)}</p></div>
+    ${p.estado==="respondida"?`<div class="card"><b>Respuesta del ${fechaCorta(p.fechaRespuesta)}</b><p style="white-space:pre-wrap;margin:6px 0 0">${esc(p.respuesta)}</p></div>`:`
+    <form class="form" id="fRespuesta" data-id="${p.id}"><label>Respuesta dada<textarea name="respuesta" required></textarea></label>
+    <label>Fecha de respuesta<input type="date" name="fecha" value="${hoyISO()}" max="${hoyISO()}" required></label>
+    <div class="acciones"><button class="btn pri" type="submit">Registrar respuesta</button></div></form>`}`;
+}
+
+/* ============ PIN ============ */
+async function pedirPIN(){
+  if (!S.ajustes.pinHash){ toast("Primero cree un PIN de administrador."); return false; }
+  const pin = prompt("PIN de administrador"); if (pin === null) return false;
+  if (await sha256("bo:" + pin) === S.ajustes.pinHash) return true;
+  toast("PIN incorrecto."); return false;
+}
+
+/* ============ Eventos ============ */
+document.addEventListener("click", async e => {
+  const nav = e.target.closest("[data-nav]"); if (nav){ ir(nav.dataset.nav); return; }
+  const el = e.target.closest("[data-act]"); if (!el) return;
+  const a = el.dataset.act, id = el.dataset.id, c = C();
+  switch (a){
+    case "cerrar": cerrar(); break;
+    case "nuevo-folio": {
+      const b = c.folios.find(f => f.estado === "borrador");
+      abrir(formFolio(c, b)); setTimeout(() => montarFirma("cvRes"), 30); break; }
+    case "editar-folio": abrir(formFolio(c, c.folios.find(f => f.id === id))); setTimeout(() => montarFirma("cvRes"), 30); break;
+    case "ver-folio": abrir(verFolio(c.folios.find(f => f.id === id))); break;
+    case "borrar-folio": if (confirm("¿Eliminar este borrador?")){ c.folios = c.folios.filter(f => f.id !== id); guardar(); cerrar(); render(); } break;
+    case "add-cant": { const op = c.items.map(i => `<option value="${i.id}">${esc(i.codigo)} · ${esc(i.descripcion)} (${esc(i.unidad)})</option>`).join(""); $("#cantLista").insertAdjacentHTML("beforeend", filaCant(op)); break; }
+    case "quitar-fotos": borradorFotos = []; $("#fotosPrev").innerHTML = ""; break;
+    case "limpiar-firma": limpiarFirma(el.dataset.cv); break;
+    case "geo":
+      if (!navigator.geolocation){ toast("Este dispositivo no permite ubicación."); break; }
+      navigator.geolocation.getCurrentPosition(p => { const g = {lat:p.coords.latitude, lng:p.coords.longitude, precision:Math.round(p.coords.accuracy)};
+        $("#fFolio [name=geo]").value = JSON.stringify(g); $("#geoTxt").textContent = `${g.lat.toFixed(5)}, ${g.lng.toFixed(5)} (±${g.precision} m)`; },
+        () => toast("No se pudo obtener la ubicación. Revise los permisos."), {enableHighAccuracy:true, timeout:15000});
+      break;
+    case "visar": {
+      const f = c.folios.find(x => x.id === id);
+      abrir(cab(`Visto bueno · Folio ${f.n}`) + `<form class="form" id="fVisto" data-id="${f.id}"><p class="tenue" style="margin:0">El interventor confirma que revisó el folio. Su firma queda sellada sobre la huella del folio.</p>
+        <label>Nombre del interventor<input name="nombre" required></label><div class="firma-caja"><canvas id="cvInt"></canvas></div>
+        <button class="btn chico" type="button" data-act="limpiar-firma" data-cv="cvInt">Borrar firma</button>
+        <div class="acciones"><button class="btn pri" type="submit">Firmar visto bueno</button></div></form>`);
+      setTimeout(() => montarFirma("cvInt"), 30); break; }
+    case "anotar": {
+      const f = c.folios.find(x => x.id === id);
+      abrir(cab(`Anotación · Folio ${f.n}`) + `<form class="form" id="fAnota" data-id="${f.id}"><label>Autor<input name="autor" required placeholder="Nombre y cargo"></label><label>Anotación<textarea name="texto" required></textarea></label>
+        <p class="tenue" style="font-size:.82rem;margin:0">La anotación queda con fecha y hora. No modifica el folio original.</p><div class="acciones"><button class="btn pri" type="submit">Agregar</button></div></form>`); break; }
+    case "verificar": verificar(); break;
+    case "imprimir-folio": imprimir(htmlFolioImp(c, c.folios.find(f => f.id === id))); break;
+    case "imprimir-bitacora": { const fs = c.folios.filter(f => f.estado === "cerrado").sort((a,b) => a.n - b.n); if (!fs.length){ toast("No hay folios cerrados."); break; } imprimir(fs.map(f => htmlFolioImp(c, f)).join("")); break; }
+    case "nuevo-evento": abrir(formEvento(el.dataset.tipo)); break;
+    case "reanudar": {
+      const ev = c.eventos.find(x => x.id === id); const f = prompt("Fecha de reanudación (AAAA-MM-DD)", hoyISO());
+      if (f && /^\d{4}-\d{2}-\d{2}$/.test(f) && f >= ev.desde){ ev.hasta = f; guardar(); render(); toast("Reanudación registrada."); } else if (f) toast("Fecha no válida."); break; }
+    case "borrar-evento": if (await pedirPIN() && confirm("¿Eliminar esta acta?")){ c.eventos = c.eventos.filter(x => x.id !== id); guardar(); render(); } break;
+    case "nueva-poliza": abrir(formPoliza()); break;
+    case "editar-poliza": abrir(formPoliza(c.polizas.find(x => x.id === id))); break;
+    case "borrar-poliza": if (await pedirPIN()){ c.polizas = c.polizas.filter(x => x.id !== id); guardar(); cerrar(); render(); } break;
+    case "nuevo-item": abrir(formItem()); break;
+    case "editar-item": abrir(formItem(c.items.find(x => x.id === id))); break;
+    case "borrar-item": if (await pedirPIN() && confirm("¿Eliminar el ítem? Las cantidades registradas en folios quedarán sin ítem.")){ c.items = c.items.filter(x => x.id !== id); guardar(); cerrar(); render(); } break;
+    case "nueva-oblig": abrir(cab("Agregar obligación") + `<form class="form" id="fOblig"><label>Obligación<textarea name="texto" required></textarea></label>
+      <div class="dos"><label>Frecuencia<select name="periodicidad"><option value="unica">Una vez</option><option value="semanal">Semanal</option><option value="mensual">Mensual</option><option value="pago">Con cada pago</option></select></label><label>Fuente<input name="fuente" placeholder="Cláusula u obligación"></label></div>
+      <div class="acciones"><button class="btn pri" type="submit">Guardar</button></div></form>`); break;
+    case "cumplir": { const o = c.obligaciones.find(x => x.id === id);
+      abrir(cab("Registrar cumplimiento") + `<p>${esc(o.texto)}</p><form class="form" id="fCumple" data-id="${o.id}"><label>Fecha<input type="date" name="fecha" value="${hoyISO()}" max="${hoyISO()}" required></label>
+        <label>Soporte<input name="nota" placeholder="Radicado, acta, correo enviado…"></label><div class="acciones"><button class="btn pri" type="submit">Guardar</button></div></form>`); break; }
+    case "nueva-pqr": abrir(formPQR()); break;
+    case "ver-pqr": abrir(verPQR(c.pqr.find(x => x.id === id))); break;
+    case "nuevo-contrato": { const n = contratoVacio(); S.contratos.push(n); S.activo = n.id; guardar(); ir("contrato"); toast("Contrato creado. Complete sus datos."); break; }
+    case "borrar-contrato":
+      if (S.contratos.length < 2){ toast("Debe quedar al menos un contrato."); break; }
+      if (await pedirPIN() && confirm(`¿Eliminar ${c.numero} con todos sus folios? Exporte un respaldo antes.`)){ S.contratos = S.contratos.filter(x => x.id !== c.id); S.activo = S.contratos[0].id; guardar(); ir("resumen"); }
+      break;
+    case "cambiar-pin": {
+      if (S.ajustes.pinHash && !(await pedirPIN())) break;
+      const p1 = prompt("Nuevo PIN (4 a 8 dígitos)"); if (!p1) break;
+      if (!/^\d{4,8}$/.test(p1)){ toast("El PIN debe tener de 4 a 8 dígitos."); break; }
+      if (prompt("Repita el PIN") !== p1){ toast("Los PIN no coinciden."); break; }
+      S.ajustes.pinHash = await sha256("bo:" + p1); guardar(); toast("PIN guardado."); render(); break; }
+    case "exportar": {
+      const blob = new Blob([JSON.stringify(S, null, 1)], {type:"application/json"});
+      const a2 = document.createElement("a"); a2.href = URL.createObjectURL(blob); a2.download = `bitacora-obra-respaldo-${hoyISO()}.json`; a2.click();
+      setTimeout(() => URL.revokeObjectURL(a2.href), 2000); toast("Respaldo descargado."); break; }
+    case "instalar": if (window._promptInstalar){ window._promptInstalar.prompt(); window._promptInstalar = null; el.hidden = true; } break;
+  }
+});
+
+document.addEventListener("change", async e => {
+  if (e.target.id === "selContrato"){ S.activo = e.target.value; guardar(); render(); }
+  if (e.target.id === "inFoto" && e.target.files[0]){
+    if (borradorFotos.length >= 4){ toast("Máximo 4 fotos por folio."); return; }
+    try { const u = await comprimir(e.target.files[0]); borradorFotos.push(u); $("#fotosPrev").insertAdjacentHTML("beforeend", `<img src="${u}" alt="Foto ${borradorFotos.length}">`); }
+    catch(err){ toast("No se pudo leer la foto."); }
+    e.target.value = "";
+  }
+  if (e.target.id === "inImportar" && e.target.files[0]){
+    try { const d = JSON.parse(await e.target.files[0].text());
+      if (!d || !Array.isArray(d.contratos)) throw 0;
+      if (confirm("Importar reemplaza los datos actuales de este dispositivo. ¿Continuar?")){ S = d; guardar(); render(); toast("Respaldo importado."); } }
+    catch(err){ toast("El archivo no es un respaldo válido de Bitácora de Obra."); }
+    e.target.value = "";
+  }
+});
+
+document.addEventListener("submit", async e => {
+  e.preventDefault(); const f = e.target, fd = new FormData(f), c = C();
+  switch (f.id){
+    case "fFolio": await guardarFolio(f, e.submitter ? e.submitter.value : "borrador"); break;
+    case "fVisto": {
+      const fo = c.folios.find(x => x.id === f.dataset.id); const firma = firmaData("cvInt");
+      if (!firma){ toast("Falta la firma del interventor."); return; }
+      const vb = {nombre:fd.get("nombre").trim(), firma, fecha:horaISO()}; vb.hash = await sha256(fo.hash + vb.firma + vb.nombre + vb.fecha);
+      fo.vistoBueno = vb; if (guardar()){ cerrar(); render(); toast("Visto bueno registrado."); } break; }
+    case "fAnota": c.folios.find(x => x.id === f.dataset.id).anotaciones.push({fecha:horaISO(), autor:fd.get("autor").trim(), texto:fd.get("texto").trim()}); guardar(); cerrar(); render(); toast("Anotación agregada."); break;
+    case "fContrato":
+      ["numero","objeto","alcance","entidad","nitEntidad","contratista","nitContratista","representante","interventoria","supervisor","lugar","fechaFirma","fechaInicio"].forEach(k => c[k] = String(fd.get(k)||"").trim());
+      ["valor","plazoMeses","plazoDias"].forEach(k => c[k] = Number(fd.get(k)) || 0);
+      guardar(); render(); toast("Contrato guardado."); break;
+    case "fEvento": {
+      const t = f.dataset.tipo; const ev = {id:uid(), tipo:t, soporte:fd.get("soporte").trim(), nota:(fd.get("nota")||"").trim(), registrado:horaISO()};
+      if (t === "suspension"){ ev.desde = fd.get("desde"); ev.hasta = fd.get("hasta") || null; if (ev.hasta && ev.hasta < ev.desde){ toast("La reanudación no puede ser antes de la suspensión."); return; } }
+      if (t === "prorroga"){ ev.meses = Number(fd.get("meses"))||0; ev.dias = Number(fd.get("dias"))||0; if (!ev.meses && !ev.dias){ toast("Indique meses o días de prórroga."); return; } }
+      if (t === "adicion"){ ev.valor = Number(fd.get("valor"))||0; }
+      c.eventos.push(ev); guardar(); cerrar(); render(); toast("Acta registrada. Revise si debe ampliar las pólizas."); break; }
+    case "fPoliza": {
+      let po = f.dataset.id ? c.polizas.find(x => x.id === f.dataset.id) : null; if (!po){ po = {id:uid()}; c.polizas.push(po); }
+      Object.assign(po, {tipo:fd.get("tipo").trim(), aseguradora:fd.get("aseguradora").trim(), numero:fd.get("numero").trim(), valor:Number(fd.get("valor"))||0, vigHasta:fd.get("vigHasta"), regla:fd.get("regla")});
+      guardar(); cerrar(); render(); break; }
+    case "fItem": {
+      let it = f.dataset.id ? c.items.find(x => x.id === f.dataset.id) : null; if (!it){ it = {id:uid()}; c.items.push(it); }
+      Object.assign(it, {codigo:fd.get("codigo").trim(), descripcion:fd.get("descripcion").trim(), unidad:fd.get("unidad").trim(), cantidad:Number(fd.get("cantidad"))||0, vrUnit:Number(fd.get("vrUnit"))||0});
+      guardar(); cerrar(); render(); break; }
+    case "fOblig": c.obligaciones.push({id:uid(), texto:fd.get("texto").trim(), periodicidad:fd.get("periodicidad"), fuente:fd.get("fuente").trim(), cumplimientos:[]}); guardar(); cerrar(); render(); break;
+    case "fCumple": c.obligaciones.find(x => x.id === f.dataset.id).cumplimientos.push({fecha:fd.get("fecha"), nota:fd.get("nota").trim(), registrado:horaISO()}); guardar(); cerrar(); render(); toast("Cumplimiento registrado."); break;
+    case "fPQR": {
+      const n = c.pqr.length + 1;
+      c.pqr.push({id:uid(), radicado:`PQR-${String(n).padStart(4,"0")}`, fecha:fd.get("fecha"), tipo:fd.get("tipo"), nombre:fd.get("nombre").trim(), telefono:fd.get("telefono").trim(),
+        direccion:fd.get("direccion").trim(), descripcion:fd.get("descripcion").trim(), estado:"abierta", autorizaDatos:true, registrado:horaISO()});
+      guardar(); cerrar(); render(); toast(`Radicada como PQR-${String(n).padStart(4,"0")}.`); break; }
+    case "fRespuesta": { const p = c.pqr.find(x => x.id === f.dataset.id); Object.assign(p, {estado:"respondida", respuesta:fd.get("respuesta").trim(), fechaRespuesta:fd.get("fecha")}); guardar(); cerrar(); render(); toast("Respuesta registrada."); break; }
+    case "fInforme": imprimir(informe(c, fd.get("mes"))); break;
+    case "fRol": {
+      const rol = fd.get("rol");
+      if (rol === "admin" && S.ajustes.rol !== "admin" && !(await pedirPIN())) return;
+      S.ajustes.rol = rol; S.ajustes.tema = fd.get("tema"); aplicarTema(); guardar(); render(); toast("Ajustes aplicados."); break; }
+  }
+});
+
+function aplicarTema(){ const t = S.ajustes.tema; if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t); }
+
+/* ============ PWA ============ */
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); window._promptInstalar = e; const b = document.getElementById("btnInstalar"); if (b) b.hidden = false; });
+if ("serviceWorker" in navigator && location.protocol === "https:"){
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+
+/* ============ Inicio ============ */
+cargar(); aplicarTema(); render();
+</script>
+</body>
+</html>
